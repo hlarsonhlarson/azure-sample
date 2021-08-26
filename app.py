@@ -1,2 +1,3 @@
 if __name__ == '__main__':
-    print('My app')
+    while True:
+        print('First branch My app')
