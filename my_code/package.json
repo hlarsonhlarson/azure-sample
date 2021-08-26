@@ -3,5 +3,15 @@
   "dependencies": {
     "axios": "^0.21.1",
     "nodejs": "^0.0.0"
-  }
+  },
+  "name": "my_code",
+  "version": "1.0.0",
+  "main": "main.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
