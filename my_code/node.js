@@ -22,27 +22,34 @@ const branchesInfo = Array.from(resp.data).map((elem) => {
 });
 
 let requestMap = new Map();
+let ids = new Array();
 
 const requests = branchesInfo.map((elem) => {
-    return axios.post(`${BRANCH_URL}/${elem.name}/builds`, config);
+    return axios.post(`${BRANCH_URL}/${elem.name}/builds`,
+    {
+        "sourceVersion": elem.reqName
+    },
+    config);
 });
 
 const responses = await Promise.all(requests);
 
 Array.from(responses).forEach(
  (resp) =>{
-    requestMap.set(resp.data.id, elem.name);
+    requestMap.set(resp.data.id, resp.data.sourceBranch);
+    ids.push(resp.data.id);
 }
 );
 
 while (requestMap.size > 0){
     let results = await Promise.all(ids.map((tmp_id) => {
-        return axios.get(`${API_URL}${USER_NAME}/${PROJECT_NAME}/builds/${tmp_id}`
-    )}
+        return axios.get(`${API_URL}${USER_NAME}/${PROJECT_NAME}/builds/${tmp_id}`, config)
+    }
     ));
-    results.data.forEach((res) => {
-        if (res.status === 'completed'){
-            console.log(`${requestMap[res.id]} build ${res.result} in ${(Date(res.finishTime) - Date(res.startTime)) / 1000} seconds. Link to build logs ${API_URL}${USER_NAME}/${PROJECT_NAME}/builds/${tmp_id}/logs`);
+    results.forEach((res) => {
+        if (res.data.status === 'completed'){
+            console.log(`${requestMap[res.data.id]} build ${res.data.result} in ${(Date(res.data.finishTime) - Date(res.data.startTime)) / 1000} seconds. Link to build logs ${API_URL}${USER_NAME}/${PROJECT_NAME}/builds/${res.data.id}/logs`);
+            requestMap.delete(res.data.id);
         };
     });
     console.log('Something happened');
