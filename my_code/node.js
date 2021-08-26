@@ -1,10 +1,8 @@
 import axios from 'axios';
+import { PROJECT_URL, BRANCH_URL, USER_API_TOKEN } from './constants';
+import { createResultString } from './helper_funcs';
 
-const USER_NAME = 'aa-badalov1-mail.ru';
-const PROJECT_NAME = 'NewApp';
-const USER_API_TOKEN = '9c7e49ce6af2339ce164798d03f3e8c7e1a8010e';
 
-const API_URL = `https://api.appcenter.ms/v0.1/apps/`;
 const config = {
     headers: {
         "X-API-Token": USER_API_TOKEN,
@@ -12,48 +10,72 @@ const config = {
     },
 };
 
-const BRANCH_URL = `${API_URL}${USER_NAME}/${PROJECT_NAME}/branches`;
-const resp = await axios.get(BRANCH_URL, config);
-const branchesInfo = Array.from(resp.data).map((elem) => {
-    return {
-        name: elem.branch.name,
-        reqName: elem.branch.commit.sha,
+
+const getBranchesList = async () => {
+    try {
+        const resp = await axios.get(BRANCH_URL, config);
+    } catch (err) {
+        console.log(err);
+        process.exit(1);
     };
-});
 
-let requestMap = new Map();
-let ids = new Array();
-
-const requests = branchesInfo.map((elem) => {
-    return axios.post(`${BRANCH_URL}/${elem.name}/builds`,
-    {
-        "sourceVersion": elem.reqName
-    },
-    config);
-});
-
-const responses = await Promise.all(requests);
-
-Array.from(responses).forEach(
- (resp) =>{
-    requestMap.set(resp.data.id, resp.data.sourceBranch);
-    ids.push(resp.data.id);
-}
-);
-
-const diffTime = (firstTime, secondTime) => {
-    return (new Date(secondTime) - new Date(firstTime)) / 1000;
-}
-while (requestMap.size > 0){
-    let results = await Promise.all(ids.map((tmp_id) => {
-        return axios.get(`${API_URL}${USER_NAME}/${PROJECT_NAME}/builds/${tmp_id}`, config)
-    }
-    ));
-    results.forEach((res) => {
-        if (res.data.status === 'completed'){
-            console.log(`${requestMap.get(res.data.id)} build ${res.data.result} in ${diffTime(res.data.finishTime, res.data.startTime)} seconds. Link to build logs ${API_URL}${USER_NAME}/${PROJECT_NAME}/builds/${res.data.id}/logs`);
-            requestMap.delete(res.data.id);
+    const branchesInfo = Array.from(resp.data).map((elem) => {
+        return {
+            name: elem.branch.name,
+            reqName: elem.branch.commit.sha,
         };
     });
-}
+    return branchesInfo;
+};
 
+const sendBuildRequests = async (branchesInfo) => {
+
+    let requestMap = new Map();
+
+    const requests = branchesInfo.map((elem) => {
+        try {
+            return axios.post(`${PROJECT_URL}/${elem.name}/builds`,
+                {
+                    "sourceVersion": elem.reqName
+                },
+                config);
+        } catch (error) {
+            console.log(error);
+            process.exit(1);
+        }
+    });
+
+    const responses = await Promise.all(requests);
+
+    Array.from(responses).forEach(
+        (resp) => {
+            requestMap.set(resp.data.id, resp.data.sourceBranch);
+        }
+    );
+
+    return requestMap;
+};
+
+const printReadyResult = async (requestMap) => {
+    while (requestMap.size > 0) {
+        try {
+            let results = await Promise.all(ids.map((tmp_id) => {
+                return axios.get(`${PROJECT_URL}/builds/${tmp_id}`, config)
+            }
+            ));
+        } catch (error) {
+            console.log(error);
+            process.env.exit(1);
+        }
+        results.forEach((res) => {
+            if (res.data.status === 'completed') {
+                console.log(createResultString(res.data, requestMap.get(res.data.id)));
+                requestMap.delete(res.data.id);
+            };
+        });
+    };
+};
+
+let branches = await getBranchesList();
+let requestMap = await sendBuildRequests(branches);
+await printReadyResult(requestMap);
