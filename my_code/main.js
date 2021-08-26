@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { PROJECT_URL, BRANCH_URL, USER_API_TOKEN } from './constants';
-import { createResultString } from './helper_funcs';
+import { PROJECT_URL, BRANCH_URL, USER_API_TOKEN } from './constants.js';
+import { createResultString } from './helper_funcs.js';
 
 
 const config = {
