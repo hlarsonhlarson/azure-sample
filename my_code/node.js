@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const USER_NAME = 'aa-badalov1-mail.ru';
-const PROJECT_NAME = 'AAAAAAA';
+const PROJECT_NAME = 'NewApp';
 const USER_API_TOKEN = '9c7e49ce6af2339ce164798d03f3e8c7e1a8010e';
 
 const API_URL = `https://api.appcenter.ms/v0.1/apps/`;
@@ -41,6 +41,9 @@ Array.from(responses).forEach(
 }
 );
 
+const diffTime = (firstTime, secondTime) => {
+    return (new Date(secondTime) - new Date(firstTime)) / 1000;
+}
 while (requestMap.size > 0){
     let results = await Promise.all(ids.map((tmp_id) => {
         return axios.get(`${API_URL}${USER_NAME}/${PROJECT_NAME}/builds/${tmp_id}`, config)
@@ -48,10 +51,9 @@ while (requestMap.size > 0){
     ));
     results.forEach((res) => {
         if (res.data.status === 'completed'){
-            console.log(`${requestMap[res.data.id]} build ${res.data.result} in ${(Date(res.data.finishTime) - Date(res.data.startTime)) / 1000} seconds. Link to build logs ${API_URL}${USER_NAME}/${PROJECT_NAME}/builds/${res.data.id}/logs`);
+            console.log(`${requestMap.get(res.data.id)} build ${res.data.result} in ${diffTime(res.data.finishTime, res.data.startTime)} seconds. Link to build logs ${API_URL}${USER_NAME}/${PROJECT_NAME}/builds/${res.data.id}/logs`);
             requestMap.delete(res.data.id);
         };
     });
-    console.log('Something happened');
 }
 
