@@ -15,3 +15,17 @@ export const createResultString = (res, branchName) => {
 export const sleep = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+export const errorHandlerAPI = (error) => {
+    if ((error.response)) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+    } else if (error.request) {
+        console.log(error.request);
+        console.log('Try to change reqyest url');
+    } else {
+        console.log('Error', error.message);
+    }
+    process.exit(1);
+};

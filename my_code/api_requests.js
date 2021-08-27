@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { PROJECT_URL, BRANCH_URL, USER_API_TOKEN } from './constants.js';
+import { errorHandlerAPI } from './helper_funcs.js';
 
 const config = {
     headers: {
@@ -13,8 +14,7 @@ export const branchesGetRequest = async () => {
     try {
         return await axios.get(BRANCH_URL, config);
     } catch (err) {
-        console.log(err);
-        process.exit(1);
+        errorHandlerAPI(err);
     };
 };
 
@@ -29,8 +29,7 @@ export const buildPostRequest = async (branchesInfo) => {
         });
         return await Promise.all(requests);
     } catch (err) {
-        console.log(err);
-        process.exit(1);
+        errorHandlerAPI(err);
     }
 }
 
@@ -41,8 +40,7 @@ export const buildGetRequest = async (requestMap) => {
         }
         ));
         return results;
-    } catch (error) {
-        console.log(error);
-        process.exit(1);
+    } catch (err) {
+        errorHandlerAPI(err);
     }
 }

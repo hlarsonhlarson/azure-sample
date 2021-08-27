@@ -3,7 +3,11 @@ import { createResultString, sleep } from './helper_funcs.js';
 import { PROJECT_URL, DELAY_TIME } from './constants';
 
 const getBranchesList = async () => {
-    const resp = await branchesGetRequest();
+    let resp = await branchesGetRequest();
+    if (!resp || !resp.data){
+        console.log('There are no branches to build');
+        process.exit(1);
+    }
     const branchesInfo = Array.from(resp.data).map((elem) => {
         return {
             name: elem.branch.name,
