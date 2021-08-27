@@ -7,8 +7,8 @@ export const diffTime = (firstTime, secondTime) => {
 export const createResultString = (res, branchName) => {
 
     return `${branchName} build ${res.result}\
-in ${diffTime(res.finishTime, res.startTime)} seconds.\
-Link to build logs http://${PROJECT_URL}/builds/${res.id}/logs`;
+ in ${diffTime(res.finishTime, res.startTime)} seconds.\
+ Link to build logs ${PROJECT_URL}/builds/${res.id}/logs`;
 
 };
 
