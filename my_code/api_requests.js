@@ -11,7 +11,7 @@ const config = {
 
 export const branchesGetRequest = async () => {
     try {
-        return axios.get(BRANCH_URL, config);
+        return await axios.get(BRANCH_URL, config);
     } catch (err) {
         console.log(err);
         process.exit(1);
@@ -27,7 +27,7 @@ export const buildPostRequest = async (branchesInfo) => {
                 },
                 config);
         });
-        return Promise.all(requests);
+        return await Promise.all(requests);
     } catch (err) {
         console.log(err);
         process.exit(1);
