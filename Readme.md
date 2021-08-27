@@ -3,7 +3,7 @@ Instruction for running project
 ```
 cd my_code
 npm install
-node main.js
+npm run-script run
 ```
 
 This will get the list of all branches configured in NewApp project.
