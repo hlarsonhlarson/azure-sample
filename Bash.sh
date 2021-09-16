@@ -1,3 +1,3 @@
 #!/bin/bash
-string1 = '123';
+var string1 = '123';
 echo $string1
