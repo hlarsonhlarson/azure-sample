@@ -17,7 +17,7 @@ steps:
     echo 1
     chmod 777 Bash.sh
     bash Bash.sh
-    echo $%NOTHIDDEN100%
+    echo $(NOTHIDDEN100)
     
 - script: |
     echo Add other tasks to build, test, and deploy your project.
