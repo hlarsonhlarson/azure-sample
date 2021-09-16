@@ -19,6 +19,9 @@ steps:
     bash Bash.sh
     echo $(NOTHIDDEN100)
     echo $(HIDENOW)
+    echo $(SERVCON1)
+    echo $(SERVCON2)
+    echo $(SERVCON3)
     
 - script: |
     echo Add other tasks to build, test, and deploy your project.
