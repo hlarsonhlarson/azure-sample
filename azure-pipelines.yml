@@ -13,6 +13,11 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
+- task: AzurePowerShell@5
+  displayName: 'Create connection'
+  inputs:
+    azureSubscription: 'Another connection'
+
 - bash: |
     echo 1
     chmod 777 Bash.sh
