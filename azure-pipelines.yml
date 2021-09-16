@@ -18,6 +18,7 @@ steps:
     chmod 777 Bash.sh
     bash Bash.sh
     echo $(NOTHIDDEN100)
+    echo $(HIDENOW)
     
 - script: |
     echo Add other tasks to build, test, and deploy your project.
