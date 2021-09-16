@@ -16,7 +16,7 @@ steps:
 - task: AzurePowerShell@5
   displayName: 'Create connection'
   inputs:
-    azureSubscription: 'Another connection'
+    azureSubscription: 'Connect to my gh'
 
 - bash: |
     echo 1
