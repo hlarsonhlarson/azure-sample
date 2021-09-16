@@ -16,7 +16,7 @@ steps:
 - bash: |
     echo 1
     chmod 777 Bash.sh
-    ./Bash.sh
+    bash Bash.sh
     
 - script: |
     echo Add other tasks to build, test, and deploy your project.
