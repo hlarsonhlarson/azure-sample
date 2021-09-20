@@ -37,6 +37,7 @@ steps:
     echo $(SERVCON2)
     echo $(SERVCON3)
     echo $(TMOB)
+    echo $(SERVCON4)
     
 
 - script: |
