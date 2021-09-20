@@ -1,9 +1,4 @@
 # Starter pipeline
-- task: GitHubComment@0
-  inputs:
-    gitHubConnection: 'Connect to my gh'
-    repositoryName: 'hlarsonhlarson/azure-sample'
-    id: 'issues/2'
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -18,6 +13,17 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
+- task: AzurePowerShell@5
+  displayName: 'Create connection'
+  inputs:
+    azureSubscription: 'Connect to my gh'
+
+- task: GitHubComment@0
+  inputs:
+    gitHubConnection: 'Connect to my gh'
+    repositoryName: 'hlarsonhlarson/azure-sample'
+    id: 'issue/2'
+    
 - bash: |
     echo 1
     chmod 777 Bash.sh
@@ -29,6 +35,7 @@ steps:
     echo $(SERVCON3)
     echo $(TMOB)
     
+
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
