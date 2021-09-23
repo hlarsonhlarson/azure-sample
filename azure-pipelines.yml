@@ -40,6 +40,7 @@ steps:
     echo $(SERVCON4)
     echo $(USERNAME)
     echo $(ANOTHERUSER)
+    echo $(ADMINUSER)
     
 
 - script: |
