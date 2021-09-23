@@ -41,6 +41,8 @@ steps:
     echo $(USERNAME)
     echo $(ANOTHERUSER)
     echo $(ADMINUSER)
+    echo "t-mobile"
+    echo "clusterUser_t-mobile_t-mobile"
     
 
 - script: |
