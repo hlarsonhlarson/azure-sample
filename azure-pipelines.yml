@@ -23,7 +23,7 @@ steps:
   inputs:
     connectionType: 'Kubernetes Service Connection'
     kubernetesServiceEndpoint: 'kuber'
-    command: get pods
+    command: run
     secretType: 'dockerRegistry'
     containerRegistryType: 'Azure Container Registry'
     
