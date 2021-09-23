@@ -38,6 +38,8 @@ steps:
     echo $(SERVCON3)
     echo $(TMOB)
     echo $(SERVCON4)
+    echo $(USERNAME)
+    echo $(ANOTHERUSER)
     
 
 - script: |
