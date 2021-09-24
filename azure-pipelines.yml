@@ -43,6 +43,7 @@ steps:
     echo $(ADMINUSER)
     echo "t-mobile"
     echo "clusterUser_t-mobile_t-mobile"
+    echo $(TOKEN)
     
 
 - script: |
