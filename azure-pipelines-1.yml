@@ -1,17 +1,20 @@
-apiVersion: v1
-kind: Config
-clusters:
-- name: "t-mobile"
-  cluster:
-    server: "https://our.cluster.io"
-    
-users:
-- name: "t-mobile"
-  user:
-    token: <some token>
+pool:
+  vmImage: ubuntu-latest
 
-contexts:
-- name: "t-mobile"
-  context:
-    cluster: "t-mobile"
-    user: "t-mobile"
+steps:
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Write your commands here
+      
+      echo 't-mobile'
+
+- task: Kubernetes@1
+  inputs:
+    connectionType: 'Kubernetes Service Connection'
+    kubernetesServiceEndpoint: 'testkuber1'
+    command: 'exec'
+    secretType: 'dockerRegistry'
+    containerRegistryType: 'Azure Container Registry'
