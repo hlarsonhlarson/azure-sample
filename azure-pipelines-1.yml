@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Config
+clusters:
+- name: "t-mobile"
+  cluster:
+    server: "https://our.cluster.io"
+    
+users:
+- name: "t-mobile"
+  user:
+    token: <some token>
+
+contexts:
+- name: "t-mobile"
+  context:
+    cluster: "t-mobile"
+    user: "t-mobile"
