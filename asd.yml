@@ -1,10 +1,7 @@
 jobs:
 - job: myjob
   timeoutInMinutes: 10
-  pool:
-    vmImage: 'ubuntu-latest'
-    demands:
-    - Agent.Name -equals N26
+  pool: MyPool
   steps:
   - script: echo Hello, world!
     displayName: 'Run a one-line script'
