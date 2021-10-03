@@ -4,7 +4,7 @@ jobs:
   pool:
     vmImage: 'ubuntu-latest'
     demands:
-    - Agent.Version -gtVersion 2.163.1
+    - Agent.Name -equals N26
   steps:
   - script: echo Hello, world!
     displayName: 'Run a one-line script'
