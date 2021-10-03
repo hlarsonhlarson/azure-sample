@@ -3,7 +3,8 @@ jobs:
   timeoutInMinutes: 10
   pool:
     vmImage: 'ubuntu-latest'
-    demands: 'myjob'
+    demands: 
+    - myjob
 
   steps:
   - script: echo Hello, world!
